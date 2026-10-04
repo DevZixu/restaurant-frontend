@@ -29,6 +29,15 @@ Responses may be a direct array or an object containing the named collection (or
 
 The API must allow browser requests from the frontend origin (CORS). This project does not include a backend, database, or sample restaurant data; the menu and orders are fetched from the configured API at runtime.
 
+## Frontend structure
+
+- `src/app/page.tsx` coordinates API loading, page state, cart calculations, and order submission.
+- `src/components/AppChrome.tsx` contains the top bar, sidebar, page heading, and feedback messages.
+- `src/components/MenuSection.tsx` renders category filters and menu item quantity controls.
+- `src/components/CurrentOrder.tsx` renders the active cart and submits/clears it through callbacks.
+- `src/components/OrdersSection.tsx` renders the order list and line items.
+- `src/lib/api.ts` contains API requests and response normalization.
+
 ## Checks
 
 ```bash
