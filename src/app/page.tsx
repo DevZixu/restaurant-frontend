@@ -47,7 +47,25 @@ export default function Home() {
   }
 
   useEffect(() => {
-    void refreshData();
+    let active = true;
+    Promise.all([api.getCategories(), api.getMenuItems(), api.getOrders()])
+      .then(([nextCategories, nextMenu, nextOrders]) => {
+        if (!active) return;
+        setCategories(nextCategories);
+        setMenu(nextMenu);
+        setOrders(nextOrders);
+      })
+      .catch((cause: unknown) => {
+        if (active) {
+          setError(cause instanceof Error ? cause.message : "Unable to load restaurant data.");
+        }
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
   const visibleMenu = useMemo(
